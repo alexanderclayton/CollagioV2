@@ -1,0 +1,19 @@
+{
+  "name": "collagiov2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "server": "nodemon server/index.ts",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install": "cd server && npm i && cd ../client && npm i"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.3"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "collagio-server",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.5",
+    "apollo-server-express": "^3.13.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "graphql": "^16.8.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.1.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.17"
+  }
+}
