@@ -1,0 +1,126 @@
+:root {
+    --first-color: #EAF6FF;
+    --second-color: #232528;
+    --third-color: #2A2A72;
+    --fourth-color: #009FFD;
+    --fifth-color: #FFA400;
+  }
+  
+  html{
+      background-color: #009FFD;
+  }
+  #main-page {
+      padding: 3ch;
+      background-color: #009FFD;
+      height: 100%;
+      width: 100%;
+  }
+  
+  div {
+    color: var(--second-color);
+  }
+  
+  h2 {
+    border-style: solid;
+    border-color: var(--third-color);
+    border-radius: 0.5ch;
+    height: max-content;
+    width: max-content;
+    color: #232528;
+    text-shadow: 2px 2px var(--fifth-color);
+  }
+  
+  p {
+      color: var(--second-color);
+      border-style: solid;
+      border-color: var(--third-color);
+      border-radius: 0.5ch;
+      height: max-content;
+      width: max-content;
+  }
+  
+  #profile {
+    position: relative
+  }
+  
+  .react-resizable {
+    position: relative; /* add this line */
+  }
+  
+  .react-resizable-handle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    cursor: se-resize;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M 1 9 L 9 1 M 4 9 L 9 4 M 7 9 L 9 7' stroke='%23fff' stroke-width='1' fill='none' stroke-linecap='square'/%3E%3C/svg%3E");
+  }
+  
+  .react-resizable-handle::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .react-resizable-handle:hover::after {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .react-resizable-handle:active {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #profile, #profile * {
+      visibility: visible;
+    }
+    #profile {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .react-resizable-handle {
+      display: none !important;
+    }
+    @page {
+      size: auto;
+      margin: 0mm;
+    }
+    @page :first {
+      margin-top: 0;
+    }
+    @page :left {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    @page :right {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+      #main-page {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          overflow-wrap: break-word;
+      }
+  
+      #profile {
+          background-color: var(--fifth-color);
+      }
+  }
+  
+    
