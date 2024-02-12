@@ -2,10 +2,10 @@ import { jwtDecode } from 'jwt-decode';
 
 class AuthService {
   getToken() {
-    return localStorage.getItem('token');
+    return localStorage.getItem('id_token');
   }
 
-  setToken(token: string) {
+  setToken(token: any) {
     localStorage.setItem('token', token);
   }
 
@@ -20,25 +20,28 @@ class AuthService {
 
   loggedIn() {
     const token = this.getToken();
-    return !!token && !this.isTokenExpired(token);
+    return token && !this.isTokenExpired(token) ? true : false;
   }
 
   login(idToken: any) {
-    localStorage.setItme('id_token', idToken)
-    window.location.assign('/')
+    localStorage.setItem('id_token', idToken);
+    window.location.assign('/');
   }
 
   logout() {
-    localStorage.removeItem('id_token')
-    window.location.reload()
+    localStorage.removeItem('id_token');
+    window.location.reload();
   }
 
-  isTokenExpired(token: string) {
-    const decoded: any = jwtDecode(token);
-    if (decoded.exp === undefined) return false;
-    const expirationDate = new Date(0);
-    expirationDate.setUTCSeconds(decoded.exp);
-    return expirationDate.valueOf() < new Date().valueOf();
+  isTokenExpired(token: any) {
+    const decoded = jwtDecode(token);
+    if (decoded.exp) {
+      if (decoded.exp < Date.now() / 1000) {
+        localStorage.removeItem('id_token');
+        return true;
+      }
+      return false;
+    }
   }
 }
 

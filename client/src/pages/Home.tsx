@@ -23,13 +23,12 @@ export const Home = () => {
   };
 
   const handleScreenshot = () => {
-    // useRef for this instead? //
     const profile = document.getElementById("profile");
-    if (profile instanceof HTMLElement) {
+    if (profile) {
       html2canvas(profile).then((canvas) => {
         canvas.toBlob((blob) => {
-          console.log(blob);
           window.print();
+          console.log(blob);
         });
       });
     }
@@ -47,8 +46,8 @@ export const Home = () => {
   } = useQuery(GET_AVATAR);
 
   if (imagesLoading || avatarLoading) return <p>Loading...</p>;
-  if (imagesError || avatarError) return <p>Error fetching data...</p>;
-
+  if (imagesError) return imagesError.message;
+  if (avatarError) return avatarError.message;
   return (
     <main>
       <div id="main-page" style={{ display: isEditing ? "none" : "block" }}>

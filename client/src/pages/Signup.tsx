@@ -9,15 +9,20 @@ export const Signup = () => {
   const [addProfile, { error, data }] = useMutation(ADD_USER);
 
   const handleFormSubmit = async (values: any) => {
-    console.log(values);
     try {
+      console.log("Handling form submission with values in try block:", values);
       const { data } = await addProfile({
-        variables: { ...values },
+        variables: {
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        },
       });
+      console.log("added user");
       authInstance.login(data.addProfile.token);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.error(error.message);
+        console.error("Error during form submission:", error.message);
       } else {
         console.error("Unknown error:", error);
       }

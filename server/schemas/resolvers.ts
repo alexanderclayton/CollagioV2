@@ -1,11 +1,15 @@
 import { AuthenticationError } from "apollo-server-express";
 import { User } from "../models";
 import { signToken } from "../utils/auth";
+import { JwtPayload } from "jsonwebtoken";
+import { IUser } from "../types/mongoose";
 
 export const resolvers = {
     Query: {
-        users: async (parent, args, context) => {
+        users: async (parent: any, args: any, context: any) => {
             try {
+                console.log("users parent", parent)
+                console.log("users args", args)
                 if (!context.user) {
                     throw new AuthenticationError("Must be logged in to proceed!");
                 }              
@@ -20,8 +24,9 @@ export const resolvers = {
             }
         },
 
-        user: async (parent, { userId }, context) => {
+        user: async (parent: any, { userId }: any, context: any) => {
             try{
+                console.log("user parent", parent)
                 if (!context.user) {
                     throw new AuthenticationError("Must be logged in to proceed!")
                 }
@@ -35,8 +40,10 @@ export const resolvers = {
             }
         },
 
-        getImages: async (parent, args, context) => {
+        getImages: async (parent: any, args: any, context: any) => {
             try {
+                console.log("getImages parent", parent)
+                console.log("getImages args", args)
                 if (!context.user) {
                     throw new AuthenticationError("Must be logged in to proceed!")
                 }
@@ -53,8 +60,10 @@ export const resolvers = {
             }
         },
 
-        getAvatar: async (parent, args, context) => {
+        getAvatar: async (parent: any, args: any, context: any) => {
             try {
+                console.log("getAvatar parent", parent)
+                console.log("getAvatar args", args)
                 if (!context.user) {
                     throw new AuthenticationError("Must be logged in to proceed!")
                 }
@@ -73,25 +82,35 @@ export const resolvers = {
     },
 
     Mutation: {
-        addUser: async (parent, { name, email, password, avatar }) => {
+        addUser: async (parent: any, {name, email, password, avatar}: IUser) => {
             try {
+                console.log("addUser parent", parent)
+                console.log("Received data:", { name, email, password, avatar });
+                
                 if (!avatar) {
-                    avatar = ''
+                    avatar = '';
                 }
-                const user = await User.create({ name, email, password, avatar })
-                const token = signToken(user)
-                return { token, user }
+                
+                // Assuming User.create returns the newly created user object
+                const user = await User.create({ name, email, password, avatar });
+                console.log("Created user:", user);
+        
+                const token = signToken(user);
+                console.log("Generated token:", token);
+        
+                return { token, user };
             } catch (error: unknown) {
                 if (error instanceof Error) {
-                    throw new Error("Failed to fetch users: " + error.message);
+                    throw new Error("Failed to create user: " + error.message);
                 } else {
-                    console.error(error)
+                    console.error(error);
                 }
             }
         },
 
-        login: async (parent, { email, password }) => {
+        login: async (parent: any, { email, password }: IUser) => {
             try {
+                console.log("login parent", parent)
                 const user = await User.findOne({ email });
                 if (!user) {
                     throw new AuthenticationError("No user with this email found!");
@@ -112,8 +131,10 @@ export const resolvers = {
             }
         },
 
-        removeUser: async (parent, args, context) => {
+        removeUser: async (parent: any, args: any, context: any) => {
             try {
+                console.log("removeUser parent", parent)
+                console.log("removeUser args", args)
                 if (context && context.user) {
                     return User.findOneAndDelete({ _id: context.user._id })
                 } else {
@@ -128,8 +149,9 @@ export const resolvers = {
             }
         },
 
-        addImage: async (parent, { downloadUrl }, context) => {
+        addImage: async (parent: any, { downloadUrl }: any, context: any) => {
             try {
+                console.log("addImage parent", parent)
                 if (context && context.user) {
                     const updatedUser = await User.findOneAndUpdate(
                         context.user._id,
@@ -149,8 +171,9 @@ export const resolvers = {
             }
         },
 
-        addAvatar: async (parent, { downloadUrl }, context) => {
+        addAvatar: async (parent: any, { downloadUrl }: any, context: any) => {
             try {
+                console.log("addAvatar parent", parent)
                 if (context && context.user) {
                     const updatedUser = await User.findOneAndUpdate(
                         context.user._id,
