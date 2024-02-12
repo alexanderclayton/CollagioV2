@@ -8,7 +8,7 @@ dotenv.config();
 const secret = process.env.SECRET;
 const expiration = "2h";
 
-interface ICustomRequest extends Request {
+export interface ICustomRequest extends Request {
     user?: string | JwtPayload
 }
 
